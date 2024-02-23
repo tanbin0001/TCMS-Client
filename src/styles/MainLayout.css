@@ -1,0 +1,19 @@
+.ant-menu-item-selected {
+    padding: 0px;
+    background-color: #B039CC !important;
+  }
+
+  .ant-layout-sider-children{
+    background-color: #C084FC !important;
+  }
+
+  .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+ 
+    color:#C084FC;
+ 
+ 
+    
+  }
+
+
+ 

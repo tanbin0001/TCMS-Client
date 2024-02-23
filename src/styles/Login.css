@@ -1,0 +1,31 @@
+@keyframes slideInFromLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .login-container {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .login-form-container {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .login-form {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .input-field {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .submit-button {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
