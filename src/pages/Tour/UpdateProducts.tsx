@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import GenericButton from "../../components/form/GenericButton";
 import { CiEdit } from "react-icons/ci";
 import FormInput from "../../components/form/FormInput";
-import Form from "../../components/form/Form";
+import Form from "../../components/form/CustomForm";
 import CustomSelect from "../../components/form/CustomSelect";
 import { branchOptions, conditionOptions } from "../../Constants/global";
 

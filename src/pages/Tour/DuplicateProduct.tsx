@@ -12,7 +12,7 @@ import { HiOutlineDuplicate } from "react-icons/hi";
 import CustomSelect from "../../components/form/CustomSelect";
 import { branchOptions, conditionOptions } from "../../Constants/global";
 import FormInput from "../../components/form/FormInput";
-import Form from "../../components/form/Form";
+import Form from "../../components/form/CustomForm";
 
 const DuplicateProduct = () => {
   const { _id } = useParams();

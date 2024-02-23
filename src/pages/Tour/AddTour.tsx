@@ -5,7 +5,6 @@ import Heading from "../../components/shared/Heading";
 import GenericButton from "../../components/form/GenericButton";
 import { IoBagAdd } from "react-icons/io5";
 
-import Form from "../../components/form/Form";
 import FormInput from "../../components/form/FormInput";
 import toast from "react-hot-toast";
 import Spinner from "../../components/shared/Spinner";
@@ -16,7 +15,16 @@ import { useEffect, useState } from "react";
 import CustomDatePicker from "../../components/form/CustomDatePicker";
 import { useCreateTourMutation } from "../../redux/api/tourApi/tour.api";
 
+const image_hosting_token = "d90ae3f3d54ab3247df92c0620d25ddf";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
+import CustomForm from "../../components/form/CustomForm";
+import { Controller } from "react-hook-form";
+// const image_hosting_token = import.meta.env.Image_Upload_token
+console.log(image_hosting_token);
+
 const AddTour = () => {
+  const img_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_token}`;
+
   const [matchedUserName, setMatchedUserName] = useState(null);
   const user = useAppSelector(selectCurrentUser);
 
@@ -35,7 +43,7 @@ const AddTour = () => {
   const [createTour, { isLoading, isSuccess }] = useCreateTourMutation();
 
   if (isSuccess) {
-    toast.success("Product Added successfully");
+    toast.success("Tour Added successfully");
   }
   if (isLoading) {
     return <Spinner />;
@@ -45,17 +53,58 @@ const AddTour = () => {
   }
 
   const onSubmit = async (data: any) => {
+    const imageFile = data.imageLink; // Get the image file directly from form data
+    console.log(imageFile); // Check if you're getting the image file correctly
+
+    const formData = new FormData();
+    formData.append("image", imageFile); // Append the image file to the form data with the correct field name
+
+    fetch(img_hosting_url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgRes) => {
+        if(imgRes.success){
+          const imageLink  = imgRes.data.display_url;
+          const {tourName,destination,tourCreator,startDate,endDate}  = data;
+       const tourData = {
+        tourName,destination,tourCreator,imageLink,startDate,endDate
+       }
+     const res =   createTour(tourData);
+     console.log(res);
+        }
+      })
+      .catch((error) => console.error("Error uploading image:", error));
+
     console.log(data);
     // await createTour(data);
   };
+
   const divClass = "grid grid-cols-2 gap-2";
 
   return (
     <div>
       <Heading title="Create Tour" />
       <div className="max-w-md mx-auto mt-8">
-        <Form onSubmit={onSubmit}>
+        <CustomForm onSubmit={onSubmit}>
           <FormInput type="text" name="tourName" label="Tour Name" />
+          {/* <FormInput type="file" name="imageLink" label="Tour Name" /> */}
+          <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+            <Controller
+              name="imageLink"
+              render={({ field: { onChange, value, ...field } }) => (
+                <Form.Item label="image">
+                  <Input
+                    {...field}
+                    type="file"
+                    value={value?.fileName}
+                    onChange={(e) => onChange(e?.target?.files?.[0])}
+                  />
+                </Form.Item>
+              )}
+            />
+          </Col>
           <div className={divClass}>
             <FormInput type="text" name="destination" label="Destination" />
             <FormInput
@@ -73,7 +122,7 @@ const AddTour = () => {
           </div>
 
           <GenericButton value="Add Product" icon={<IoBagAdd />} />
-        </Form>
+        </CustomForm>
       </div>
     </div>
   );

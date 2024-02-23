@@ -12,7 +12,7 @@ import { FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-fo
     children: ReactNode;
   } & TFormConfig;
 
-const Form = ({ onSubmit, children, defaultValues }: TFormProps) => {
+const CustomForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
     const formConfig: TFormConfig = {};
 
     if (defaultValues) {
@@ -29,4 +29,4 @@ const Form = ({ onSubmit, children, defaultValues }: TFormProps) => {
   )
 }
 
-export default Form
+export default CustomForm;
