@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import '../../styles/Product.css'
  
 import { Slider } from "antd";
+import { useGetAllToursQuery } from "../../redux/api/tourApi/tour.api";
 
 
 
@@ -40,20 +41,9 @@ if(isDeletedQueryError){
   toast.error('Something went wrong!')
 }
  
-  const selectedFilters =
-  selectedItemLabel === "All"
-    ? {}
-    : selectedItemLabel === "priceRange"
-    ? {
-        minPrice: priceRange[0],
-        maxPrice: priceRange[1],
-      }
-    : {
-        [selectedItemLabel || ""]: inputValue,
-      };
-
-
-  const { data, error:isGetQueryError , isLoading:isGetQueryLoading } = useGetProductsQuery(selectedFilters);
+ 
+  const { data, error:isGetQueryError , isLoading:isGetQueryLoading } = useGetAllToursQuery(undefined);
+  console.log(data);
  
   if(isGetQueryError){
     toast.error('Failed to get products')
@@ -70,35 +60,24 @@ if(isDeletedQueryError){
 
   
 
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
-  };
+  // const handleInputChange = (value: string) => {
+  //   setInputValue(value);
+  // };
 
-  const handleSelectedItemChange = (label: string | null) => {
-    setSelectedItemLabel(label);
-  };
+  // const handleSelectedItemChange = (label: string | null) => {
+  //   setSelectedItemLabel(label);
+  // };
 
   
-  const handleDeleteAllProducts = async () => {
-    if (checkedProductsToDelete.length > 0) {
+  // const handleDeleteAllProducts = async () => {
+  //   if (checkedProductsToDelete.length > 0) {
       
-      await deleteMultipleProducts(checkedProductsToDelete);
-      setCheckedProductsToDelete([]);
-    }else{
-      toast.error('Please select items to delete!')
-    }
-  };
-
-  const handleCheckboxChange = (isChecked: boolean) => {
- 
-    setToggleCheck(isChecked)
-    console.log('isChecked in Products =>', isChecked);
-  };
-
-  const handleSliderChange = (values: number[] | [number, number]) => {
-    setPriceRange((values) as  [number, number] );
- 
-  };
+  //     await deleteMultipleProducts(checkedProductsToDelete);
+  //     setCheckedProductsToDelete([]);
+  //   }else{
+  //     toast.error('Please select items to delete!')
+  //   }
+  // };
 
  
   
@@ -109,7 +88,7 @@ if(isDeletedQueryError){
       <Heading title="All Products" />
     
 
-      <div className="grid grid-cols-3 mt-10  ">
+      {/* <div className="grid grid-cols-3 mt-10  ">
         <DropDown onSelectedItemChange={handleSelectedItemChange} />
  <div className="flex justify-center">
 
@@ -151,7 +130,7 @@ if(isDeletedQueryError){
   
 )}
  
- 
+  */}
       
 
       <div>
@@ -160,7 +139,7 @@ if(isDeletedQueryError){
           checkedProductsToDelete={checkedProductsToDelete}
           setCheckedProductsToDelete={setCheckedProductsToDelete}
           product={product}
-          onCheckboxChange={handleCheckboxChange}
+       
           />
         ))}
       </div>

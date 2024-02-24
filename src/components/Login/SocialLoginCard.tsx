@@ -6,7 +6,7 @@ const SocialLoginCard = () => {
   return (
     <div>
       {/* first div */}
-      <div className=" lg:w-[400px] h-[500px]  p-10  space-y-9 bg-purple-600   flex flex-col   justify-center     ">
+      <div className=" lg:w-[400px] h-[80vh]  p-10  space-y-9 bg-purple-600   flex flex-col   justify-center     ">
         <h1 className="text-3xl font-bold ">SportGearHub</h1>
         <p>Login using social media to get quick access</p>
         <div className="flex flex-col space-y-4 items-center mx-3">

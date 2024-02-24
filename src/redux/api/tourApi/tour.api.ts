@@ -5,22 +5,16 @@ const productsApi = baseApi.injectEndpoints({
 
   endpoints: (builder) => ({
 
-    // getProducts: builder.query({
-    //   query: (filters) => {
-    //     if ('minPrice' in filters && 'maxPrice' in filters) {
-    //       return {
-    //         url: `/product/all-products?minPrice=${filters.minPrice}&maxPrice=${filters.maxPrice}`,
-
-    //         method: "GET",
-    //       };
-    //     }
-    //     return {
-    //       url: `/product/all-products?${new URLSearchParams(filters).toString()}`,
-    //       method: "GET",
-    //     };
-    //   },
-    //   providesTags: ['products']
-    // }),
+    getAllTours: builder.query({
+      query: (filters) => {
+      
+        return {
+          url: `/tour/tours`,
+          method: "GET",
+        };
+      },
+      providesTags: ['tours']
+    }),
 
     createTour: builder.mutation({
       query: (data) => ({
@@ -64,4 +58,4 @@ const productsApi = baseApi.injectEndpoints({
 })
 
 // export const { useGetProductsQuery, useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation, useDeleteMultipleProductsMutation } = productsApi;
-export const {   useCreateTourMutation } = productsApi;
+export const {   useCreateTourMutation,useGetAllToursQuery } = productsApi;

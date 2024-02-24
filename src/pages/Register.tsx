@@ -1,24 +1,70 @@
-import { FieldValues } from "react-hook-form";
+import { Controller, FieldValues } from "react-hook-form";
 import SocialLoginCard from "../components/Login/SocialLoginCard";
 import "../styles/Login.css";
 import { useRegisterMutation } from "../redux/api/authApi/authApi";
 import toast from "react-hot-toast";
-import { Button, Row } from "antd";
-import Form from "../components/form/CustomForm";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
+
 import FormInput from "../components/form/FormInput";
 import { useNavigate } from "react-router-dom";
+import CustomForm from "../components/form/CustomForm";
+import Spinner from "../components/shared/Spinner";
+import { useState } from "react";
+
+const image_hosting_token = "d90ae3f3d54ab3247df92c0620d25ddf";
 const Register = () => {
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
+
   const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
+  const [loading, setLoading] = useState(false);
 
-  // register handler
+  
+
   const onSubmit = async (data: FieldValues) => {
+ 
+    setLoading(true);
+
+    const imageFile = data.imageLink;
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
     try {
-      register(data);
-      navigate(`/login`);
-      toast.success("Registration Success");
+      const response = await fetch(img_hosting_url, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        toast.error("Failed to upload image");
+      }
+
+      const imgRes = await response.json();
+      if (imgRes.success) {
+        const imageLink = imgRes.data.display_url;
+        const { firstName, lastName, email, username, password } = data;
+        const userInfo = {
+          firstName,
+          lastName,
+          email,
+          username,
+          imageLink,
+          password,
+        };
+
+        const res = await register(userInfo);
+        navigate(`/login`);
+     toast.success("Registration Success");
+
+       if(!res){
+        toast.error('Something went wrong')
+       }
+      }
     } catch (error) {
-      toast.error("Registration failed");
+     toast.error("Error uploading image");
+    } finally {
+      
+      setLoading(false);
     }
   };
 
@@ -34,38 +80,61 @@ const Register = () => {
     alignItems: "center",
     color: "white",
   };
+
   return (
     <div style={backgroundStyle}>
-      <div className="    lg:flex">
-        <SocialLoginCard />
-        {/* second div */}
-        <div className="bg-white text-black       h-[500px]   lg:flex items-center  space-y-2 ">
-          <div className="text-center   login-container">
-            <h1 className="font-bold text-2xl mb-1">Sign up for free!</h1>
+    
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="lg:flex">
+          <SocialLoginCard />
+          {/* second div */}
+          <div className="bg-white text-black h-[80vh] lg:flex items-center space-y-2 ">
+            <div className="text-center login-container">
+              <h1 className="font-bold text-2xl mb-1">Sign up for free!</h1>
 
-            <Row
-              justify="center"
-              align="middle"
-              className="max-w-md mx-auto p-5 mt-8"
-            >
-              <Form onSubmit={onSubmit}>
-                <FormInput type="text" name="username" label="User Name" />
-                <FormInput type="email" name="email" label="Email" />
-                <FormInput type="text" name="password" label="Password" />
-                <Button
-                  htmlType="submit"
-                  className="w-96 px-4 py-2 font-bold text-white bg-purple-500 rounded-md hover:bg-purple-700"
-                >
-                  {isLoading ? "Signing Up" : "Sign Up"}
-                </Button>
-              </Form>
-            </Row>
-            <p className="text-purple-400">
-              <a href="/login">Already have an account?</a>
-            </p>
+              <Row
+                justify="center"
+                align="middle"
+                className="max-w-md mx-auto p-5 mt-8"
+              >
+                <CustomForm onSubmit={onSubmit}>
+                  <FormInput type="text" name="firstName" label="First Name" />
+                  <FormInput type="text" name="lastName" label="Last Name" />
+                  <FormInput type="text" name="username" label="User Name" />
+                  <FormInput type="email" name="email" label="Email" />
+                  <FormInput type="text" name="password" label="Password" />
+                  <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                    <Controller
+                      name="imageLink"
+                      render={({ field: { onChange, value, ...field } }) => (
+                        <Form.Item label="image">
+                          <Input
+                            {...field}
+                            type="file"
+                            value={value?.fileName}
+                            onChange={(e) => onChange(e?.target?.files?.[0])}
+                          />
+                        </Form.Item>
+                      )}
+                    />
+                  </Col>
+                  <Button
+                    htmlType="submit"
+                    className="w-96 px-4 py-2 font-bold text-white bg-purple-500 rounded-md hover:bg-purple-700"
+                  >
+                    {isLoading ? "Signing Up" : "Sign Up"}
+                  </Button>
+                </CustomForm>
+              </Row>
+              <p className="text-purple-400">
+                <a href="/login">Already have an account?</a>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

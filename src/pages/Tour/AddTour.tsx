@@ -16,14 +16,14 @@ import CustomDatePicker from "../../components/form/CustomDatePicker";
 import { useCreateTourMutation } from "../../redux/api/tourApi/tour.api";
 
 const image_hosting_token = "d90ae3f3d54ab3247df92c0620d25ddf";
-import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Button, Col, Divider, Form, Input } from "antd";
 import CustomForm from "../../components/form/CustomForm";
 import { Controller } from "react-hook-form";
 // const image_hosting_token = import.meta.env.Image_Upload_token
 console.log(image_hosting_token);
 
 const AddTour = () => {
-  const img_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_token}`;
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
   const [matchedUserName, setMatchedUserName] = useState(null);
   const user = useAppSelector(selectCurrentUser);
@@ -53,11 +53,11 @@ const AddTour = () => {
   }
 
   const onSubmit = async (data: any) => {
-    const imageFile = data.imageLink; // Get the image file directly from form data
-    console.log(imageFile); // Check if you're getting the image file correctly
+    const imageFile = data.imageLink;  
+    console.log(imageFile);  
 
     const formData = new FormData();
-    formData.append("image", imageFile); // Append the image file to the form data with the correct field name
+    formData.append("image", imageFile);  
 
     fetch(img_hosting_url, {
       method: "POST",

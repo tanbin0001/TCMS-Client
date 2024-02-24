@@ -57,7 +57,7 @@ const Login = () => {
         <SocialLoginCard />
 
         {/* second div */}
-        <div className="bg-white text-black lg:w-96      h-[500px]   flex items-center justify-center space-y-2 ">
+        <div className="bg-white text-black lg:w-96      h-[80vh]   flex items-center justify-center space-y-2 ">
           <div className="text-center   login-container ">
             <h1 className="font-bold text-2xl mb-1">Login to your account</h1>
             <p>
