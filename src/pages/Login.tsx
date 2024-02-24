@@ -10,8 +10,9 @@ import { verifyToken } from "../utils/verifyToken";
 import { TUser, setUser } from "../redux/features/authSlice";
 import { Button, Row } from "antd";
 
-import Form from "../components/form/CustomForm";
+import CustomForm from "../components/form/CustomForm";
 import FormInput from "../components/form/FormInput";
+import ForgottenPasswordModal from "../components/Login/ForgottenPasswordModal";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Login = () => {
               align="middle"
               className="  mx-auto mt-8      "
             >
-              <Form onSubmit={onSubmit}>
+              <CustomForm onSubmit={onSubmit}>
                 <FormInput type="text" name="username" label="User Name" />
                 <FormInput type="text" name="password" label="Password" />
                 <Button
@@ -82,8 +83,11 @@ const Login = () => {
                 >
                   {isLoading ? "Logging in" : "Login"}
                 </Button>
-              </Form>
+              </CustomForm>
+
             </Row>
+            {/* <p>Forgotten Password?</p> */}
+            <ForgottenPasswordModal/>
           </div>
         </div>
       </div>

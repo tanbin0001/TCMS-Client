@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import { userRoutePaths } from "./userRoutes";
+import ResetPassword from "../pages/ResetPassword";
  
 
 
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
 
       {

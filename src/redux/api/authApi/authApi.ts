@@ -12,12 +12,19 @@ const authApi = baseApi.injectEndpoints({
         }),
         register: builder.mutation({
             query: (userinfo) => ({
-                url: 'auth/register',
+                url: '/auth/register',
                 method: "POST",
                 body: userinfo
+            })
+        }),
+        resetPassword: builder.mutation({
+            query: (newUserInfo) => ({
+                url: '/auth/reset-password',
+                method: "POST",
+                body: newUserInfo
             })
         })
     })
 })
 
-export const { useLoginMutation,useRegisterMutation } = authApi
+export const { useLoginMutation,useRegisterMutation,useResetPasswordMutation } = authApi
