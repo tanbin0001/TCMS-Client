@@ -4,7 +4,7 @@ import {
   useUpdateProductMutation,
 } from "../../redux/api/productsApi/productsApi";
 import { useParams } from "react-router-dom";
-import { TSportsItem } from "../../type/ProductType";
+import { TSportsItem } from "../../type/TourType";
 import Spinner from "../../components/shared/Spinner";
 import toast from "react-hot-toast";
 import GenericButton from "../../components/form/GenericButton";

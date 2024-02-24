@@ -77,7 +77,7 @@ const AddTour = () => {
       })
       .catch((error) => console.error("Error uploading image:", error));
 
-    console.log(data);
+ 
     // await createTour(data);
   };
 
@@ -90,11 +90,11 @@ const AddTour = () => {
         <CustomForm onSubmit={onSubmit}>
           <FormInput type="text" name="tourName" label="Tour Name" />
           {/* <FormInput type="file" name="imageLink" label="Tour Name" /> */}
-          <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+          <Col span={24} md={{ span: 12 }} lg={{ span: 24 }}>
             <Controller
               name="imageLink"
               render={({ field: { onChange, value, ...field } }) => (
-                <Form.Item label="image">
+                <Form.Item label="Image">
                   <Input
                     {...field}
                     type="file"

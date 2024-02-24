@@ -26,16 +26,17 @@ const productsApi = baseApi.injectEndpoints({
       invalidatesTags: ['tours']
 
     }),
-    // updateProduct: builder.mutation({
-    //   query: ({ productInfo, _id }) => {
-    //     return {
-    //       url: `/product/update-product/${_id}`,
-    //       method: "PATCH",
-    //       body: productInfo,
-    //     };
-    //   },
-    //   invalidatesTags: ['products']
-    // }),
+    updateTour: builder.mutation({
+      query: ({ tourInfo, _id }) => {
+       
+        return {
+          url: `/tour/update-tour/${_id}`,
+          method: "PATCH",
+          body: tourInfo,
+        };
+      },
+      invalidatesTags: ['tours']
+    }),
     // deleteProduct: builder.mutation({
     //   query: (id) => ({
     //     url: `/product/delete-product/${id}`,
@@ -58,4 +59,4 @@ const productsApi = baseApi.injectEndpoints({
 })
 
 // export const { useGetProductsQuery, useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation, useDeleteMultipleProductsMutation } = productsApi;
-export const {   useCreateTourMutation,useGetAllToursQuery } = productsApi;
+export const {   useCreateTourMutation,useGetAllToursQuery,useUpdateTourMutation } = productsApi;

@@ -1,5 +1,6 @@
 import AddTour from "../pages/Tour/AddTour";
 import AllTours from "../pages/Tour/AllTours";
+import UpdateTour from "../pages/Tour/UpdateTour";
 
  
 
@@ -15,6 +16,10 @@ export const userRoutePaths = [
     name: "All Tours",
     path: "all-tours",
     element: <AllTours />,
+  },
+  {
+    path: "update-tour/:_id",
+    element: <UpdateTour />,
   },
   
    
