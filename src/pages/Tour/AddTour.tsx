@@ -19,9 +19,7 @@ const image_hosting_token = "d90ae3f3d54ab3247df92c0620d25ddf";
 import { Button, Col, Divider, Form, Input } from "antd";
 import CustomForm from "../../components/form/CustomForm";
 import { Controller } from "react-hook-form";
-// const image_hosting_token = import.meta.env.Image_Upload_token
-console.log(image_hosting_token);
-
+ 
 const AddTour = () => {
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
@@ -78,7 +76,7 @@ const AddTour = () => {
       .catch((error) => console.error("Error uploading image:", error));
 
  
-    // await createTour(data);
+   
   };
 
   const divClass = "grid grid-cols-2 gap-2";
