@@ -18,11 +18,13 @@ const AllTours = () => {
     isLoading: isGetQueryLoading,
   } = useGetAllToursQuery(undefined);
 
+  console.log(data);
+
   if (isGetQueryError) {
     toast.error("Failed to get tours");
   }
-  const filteredProducts = data?.data?.filter((product: TTourItem) =>
-    Object.values(product).some((value) =>
+  const filteredTours = data?.data?.filter((tour: TTourItem) =>
+    Object.values(tour).some((value) =>
       value.toString().toLowerCase().includes(searchText.toLowerCase())
     )
   );
@@ -33,14 +35,14 @@ const AllTours = () => {
 
   return (
     <div>
-      <Heading title="All Products" />
+      <Heading title="All Tours" />
 
-      <div className="grid grid-cols-3 mt-10  ">
-        {/* <DropDown onSelectedItemChange={handleSelectedItemChange} /> */}
-        <div className="flex justify-center">
+      <div className="  mt-10  flex justify-center ">
+      
+        <div className="  border border-red-300">
           <input
-            className=" lg:w-96  px-4 py-1  text-lg rounded-md border-2 border-purple-400 text-gray-600 outline-purple-600"
-            placeholder="Search products"
+            className=" lg:w-96  px-4 py-1    text-lg rounded-md border-2 border-purple-400 text-gray-600 outline-purple-600"
+            placeholder="Search Tours"
             type="text"
             onChange={(e) => setSearchText(e.target.value)}
           />
@@ -48,7 +50,7 @@ const AllTours = () => {
       </div>
 
       <div>
-        {filteredProducts?.map((product: any) => (
+        {filteredTours?.map((product: any) => (
           <Card key={product._id} product={product} />
         ))}
       </div>

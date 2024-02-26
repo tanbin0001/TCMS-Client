@@ -19,6 +19,7 @@ const Card: React.FC<{ product: TTourItem }> = ({ product }) => {
     startDate,
     endDate,
   } = product;
+ 
   const buttonStyles =
     "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white  bg-purple-500 rounded-md hover:bg-purple-400";
 
@@ -76,14 +77,10 @@ const Card: React.FC<{ product: TTourItem }> = ({ product }) => {
 
             <div className="flex  items-center  gap-5">
               <>
-                <Link to={`/${user!.role}/duplicate-product/${_id}`}>
-                  <button className={buttonStyles}>
-                    <HiOutlineDuplicate className="mr-2" /> Create Variant
-                  </button>
-                </Link>
+              
                 <Link to={`/${user!.role}/update-tour/${_id}`}>
                   <button className={buttonStyles}>
-                    <FaRegEdit />
+                    Update Tour <FaRegEdit />
                   </button>
                 </Link>
               </>

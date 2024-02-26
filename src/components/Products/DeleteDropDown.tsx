@@ -2,9 +2,10 @@
  
 import type { MenuProps } from 'antd';
 import { Dropdown,  Space } from 'antd';
-import { useDeleteProductMutation } from '../../redux/api/productsApi/productsApi';
+ 
 import { CiMenuKebab } from "react-icons/ci";
 import toast from 'react-hot-toast';
+import { useDeleteTourMutation } from '../../redux/api/tourApi/tour.api';
 
 interface DeleteDropDownProps {
     _id: string;
@@ -12,7 +13,7 @@ interface DeleteDropDownProps {
 
 
 const DeleteDropDown: React.FC<DeleteDropDownProps> = ({_id}) => {
-    const [deleteProduct] = useDeleteProductMutation()
+    const [deleteTour] = useDeleteTourMutation()
 
     
     const items: MenuProps['items'] = [
@@ -24,8 +25,8 @@ const DeleteDropDown: React.FC<DeleteDropDownProps> = ({_id}) => {
       ];
       const onClick: MenuProps['onClick'] = ( ) => {
          
-        deleteProduct(_id)
-        toast.success('Product deleted Successfully!')
+        deleteTour(_id)
+        toast.success('Tour deleted Successfully!')
       };
       
 

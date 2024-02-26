@@ -47,7 +47,7 @@ const Sidebar = () => {
         }} 
       >
     <div className="demo-logo-vertical text-white flex items-center justify-center text-2xl h-20 font-bold  bg-purple-400">
-           <img src="/logo.png" className="w-10" alt="" /> <h1>SportGearHub</h1>
+           <img src="/logo.png" className="w-10" alt="" /> <h1>TourCompass</h1>
          </div>
       </div>
      

@@ -37,26 +37,18 @@ const productsApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['tours']
     }),
-    // deleteProduct: builder.mutation({
-    //   query: (id) => ({
-    //     url: `/product/delete-product/${id}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ['products']
-    // }),
+    deleteTour: builder.mutation({
+      query: (_id) => ({
+        url: `/tour/delete-tour/${_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['tours']
+    }),
 
-    // deleteMultipleProducts: builder.mutation({
-    //   query: (ids) => ({
-    //     url: '/product/delete-multiple-products',
-    //     method: "POST",
-    //     body: { ids },
-    //   }),
-    //   invalidatesTags: ['products']
-    // }),
+     
 
 
   })
 })
 
-// export const { useGetProductsQuery, useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation, useDeleteMultipleProductsMutation } = productsApi;
-export const {   useCreateTourMutation,useGetAllToursQuery,useUpdateTourMutation } = productsApi;
+ export const {   useCreateTourMutation,useGetAllToursQuery,useUpdateTourMutation,useDeleteTourMutation } = productsApi;
