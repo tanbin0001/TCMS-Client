@@ -1,32 +1,30 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
+import CustomForm from "../form/CustomForm";
+import FormInput from "../form/FormInput";
+import { useForgetPasswordMutation } from "../../redux/api/authApi/authApi";
+import toast from "react-hot-toast";
 
 
-
-
-
-
-
-
-
-
-
-//! TODO: handle forget password (issue: localstorage)
+ 
 const ForgottenPasswordModal = () => {
-    const [loader, setLoader] = useState(false);
+ 
     const [isModalOpen, setIsModalOpen] = useState(false);
- 
+ const [forgetPassword,{isSuccess}] = useForgetPasswordMutation()
   
  
- const handleForgetPassword = () => {
-    const dataString = localStorage.getItem("persist:auth");
-    const data = JSON.parse(dataString as string);
-    const userString = data.user;
-    const user = JSON.parse(userString);
-    const userId = user._id;
   
+ const onSubmit= async(data :any)=> {
+  const toastId = toast.loading("Generating reset password link");
+console.log(data);
+const res = await forgetPassword(data)
+
+
+if(isSuccess){
+  toast.success("Password reset link generated successfully, please check your email", { id: toastId, duration: 6000 });
+}
+console.log(res,'from res ');
  }
-   
   
     const showModal = () => {
       setIsModalOpen(true);
@@ -57,7 +55,20 @@ const ForgottenPasswordModal = () => {
 
           footer={null}
         >
-         <button onClick={() => handleForgetPassword} className="text-white bg-purple-500 rounded-md px-2 py-1">reset password</button>
+      <div className="mt-5">
+      <CustomForm  onSubmit={onSubmit}>
+         <FormInput  type="text" name="email" label="please enter your email" />
+      
+       
+         <Button
+                className="text-white bg-purple-500 rounded-md px-2 py-1"
+                  htmlType="submit"
+                >
+                  {/* {isLoading ? "Logging in" : "Login"} */}
+                  Reset Password
+                </Button>
+         </CustomForm>
+      </div>
         </Modal>
       </>
     );

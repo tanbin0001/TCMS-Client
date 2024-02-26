@@ -94,7 +94,7 @@ const RegisterTour = () => {
     };
 
  const res = await registerTour(requestData)
- console.log(res);
+ 
   };
 
   const handleChange = (value: any, index: number) => {
@@ -124,10 +124,13 @@ const RegisterTour = () => {
           />
           {participants.map((participant, index) => (
             <div key={index}>
+                <label className="     text-gray-700 font-semibold">
+          {`Select Participant ${index + 1}`}
+                </label>
+
               <Select
                 allowClear
-                style={{ width: "100%" }}
-                placeholder={`Select Participant ${index + 1}`}
+                style={{ width: "100%" }}      
                 onChange={(value) => handleChange(value, index)}
                 options={userOptions}
               />

@@ -17,14 +17,47 @@ const authApi = baseApi.injectEndpoints({
                 body: userinfo
             })
         }),
+        // resetPassword: builder.mutation({
+        //     query: (newUserInfo: any,token: any) => ({
+        //         return{
+        //             url: '/auth/reset-password',
+        //             method: "POST",
+        //             body: newUserInfo,
+        //             headers: {
+        //                 authorization: `${token}`,
+        //                 // "your-custom-header": params.customKey
+        //             },
+        //         }
+              
+        //     })
+        // }),
         resetPassword: builder.mutation({
-            query: (newUserInfo) => ({
-                url: '/auth/reset-password',
+            query: (args) => {
+                console.log("newUserInfo:", args.newUserInfo);
+                console.log("token:", args.token);
+        
+                return {
+                    url: '/auth/reset-password',
+                    method: "POST",
+                    body: args.newUserInfo,
+                    headers: {
+                        authorization: `${args.token}`,
+                        // "your-custom-header": params.customKey
+                    }
+                };
+            }
+        }),
+        
+        forgetPassword: builder.mutation({
+            query: (email) => ({
+                url: '/auth/forget-password',
                 method: "POST",
-                body: newUserInfo
+                body: email
             })
-        })
+        }),
+
+        
     })
 })
 
-export const { useLoginMutation,useRegisterMutation,useResetPasswordMutation } = authApi
+export const { useLoginMutation,useRegisterMutation,useResetPasswordMutation,useForgetPasswordMutation } = authApi

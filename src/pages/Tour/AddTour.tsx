@@ -16,10 +16,10 @@ import CustomDatePicker from "../../components/form/CustomDatePicker";
 import { useCreateTourMutation } from "../../redux/api/tourApi/tour.api";
 
 const image_hosting_token = "d90ae3f3d54ab3247df92c0620d25ddf";
-import { Button, Col, Divider, Form, Input } from "antd";
+import { Col, Form, Input } from "antd";
 import CustomForm from "../../components/form/CustomForm";
 import { Controller } from "react-hook-form";
- 
+
 const AddTour = () => {
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
@@ -51,11 +51,11 @@ const AddTour = () => {
   }
 
   const onSubmit = async (data: any) => {
-    const imageFile = data.imageLink;  
-    console.log(imageFile);  
+    const imageFile = data.imageLink;
+    console.log(imageFile);
 
     const formData = new FormData();
-    formData.append("image", imageFile);  
+    formData.append("image", imageFile);
 
     fetch(img_hosting_url, {
       method: "POST",
@@ -63,20 +63,23 @@ const AddTour = () => {
     })
       .then((res) => res.json())
       .then((imgRes) => {
-        if(imgRes.success){
-          const imageLink  = imgRes.data.display_url;
-          const {tourName,destination,tourCreator,startDate,endDate}  = data;
-       const tourData = {
-        tourName,destination,tourCreator,imageLink,startDate,endDate
-       }
-     const res =   createTour(tourData);
-     console.log(res);
+        if (imgRes.success) {
+          const imageLink = imgRes.data.display_url;
+          const { tourName, destination, tourCreator, startDate, endDate } =
+            data;
+          const tourData = {
+            tourName,
+            destination,
+            tourCreator,
+            imageLink,
+            startDate,
+            endDate,
+          };
+          const res = createTour(tourData);
+          console.log(res);
         }
       })
       .catch((error) => console.error("Error uploading image:", error));
-
- 
-   
   };
 
   const divClass = "grid grid-cols-2 gap-2";
@@ -87,22 +90,27 @@ const AddTour = () => {
       <div className="max-w-md mx-auto mt-8">
         <CustomForm onSubmit={onSubmit}>
           <FormInput type="text" name="tourName" label="Tour Name" />
-          {/* <FormInput type="file" name="imageLink" label="Tour Name" /> */}
-          <Col span={24} md={{ span: 12 }} lg={{ span: 24 }}>
-            <Controller
-              name="imageLink"
-              render={({ field: { onChange, value, ...field } }) => (
-                <Form.Item label="Image">
-                  <Input
-                    {...field}
-                    type="file"
-                    value={value?.fileName}
-                    onChange={(e) => onChange(e?.target?.files?.[0])}
-                  />
-                </Form.Item>
-              )}
-            />
-          </Col>
+
+         
+       <Col span={24} md={{ span: 12 }} lg={{ span: 24 }}>
+  <Form.Item  labelCol={{ span: 24 }}
+    label={ <p style={{fontWeight:"500"}}>Image</p> }>
+ 
+    <Controller
+      name="imageLink"
+      render={({ field: { onChange, value, ...field } }) => (
+        <Input
+          {...field}
+          type="file"
+          value={value?.fileName}
+          onChange={(e) => onChange(e?.target?.files?.[0])}
+        />
+      )}
+    />
+  </Form.Item>
+</Col>
+
+
           <div className={divClass}>
             <FormInput type="text" name="destination" label="Destination" />
             <FormInput

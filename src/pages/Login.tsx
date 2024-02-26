@@ -86,7 +86,7 @@ const Login = () => {
               </CustomForm>
 
             </Row>
-            {/* <p>Forgotten Password?</p> */}
+            
             <ForgottenPasswordModal/>
           </div>
         </div>

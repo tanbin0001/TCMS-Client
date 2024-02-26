@@ -1,5 +1,7 @@
 import TourDetails from "../components/Dashboard/tourReport/TourDetails";
 import Dashboard from "../pages/Dashboard";
+import AllExpenses from "../pages/Expense/AllExpenses";
+import RecordExpense from "../pages/Expense/RecordExpense";
 import RegisterTour from "../pages/RegisterTour/RegisterTour";
 import AddTour from "../pages/Tour/AddTour";
 import AllTours from "../pages/Tour/AllTours";
@@ -38,6 +40,21 @@ export const userRoutePaths = [
     path: "tour-details/:_id",
     element: <TourDetails />,
   },
+  {
+  
+    path: "record-expense/:_id",
+    element: <RecordExpense />,
+  },
+  {
+  
+    path: "expenses-summary/:_id",
+    element: <AllExpenses />,
+  },
+  // {
+  //   name: "Record Expense",
+  //   path: "record-expense",
+  //   element: <RecordExpense />,
+  // },
   
    
  

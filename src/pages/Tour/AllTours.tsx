@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Card from "../../components/Card";
 import Heading from "../../components/shared/Heading";
-import { useDeleteMultipleProductsMutation } from "../../redux/api/productsApi/productsApi";
 import { TTourItem } from "../../type/TourType";
 import Spinner from "../../components/shared/Spinner";
 import toast from "react-hot-toast";

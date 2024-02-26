@@ -1,9 +1,9 @@
 import { Controller, FieldValues } from "react-hook-form";
-import SocialLoginCard from "../components/Login/SocialLoginCard";
+ 
 import "../styles/Login.css";
 import { useRegisterMutation } from "../redux/api/authApi/authApi";
 import toast from "react-hot-toast";
-import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, Row } from "antd";
 
 import FormInput from "../components/form/FormInput";
 import { useNavigate } from "react-router-dom";
@@ -88,11 +88,11 @@ const Register = () => {
         <Spinner />
       ) : (
         <div className="lg:flex">
-          <SocialLoginCard />
+       
           {/* second div */}
-          <div className="bg-white text-black h-[80vh] lg:flex items-center space-y-2 ">
+          <div className="bg-white text-black     lg:flex items-center space-y-2 ">
             <div className="text-center login-container">
-              <h1 className="font-bold text-2xl mb-1">Sign up for free!</h1>
+              <h1 className="font-bold text-2xl my-2">Sign up for free!</h1>
 
               <Row
                 justify="center"
@@ -100,12 +100,14 @@ const Register = () => {
                 className="max-w-md mx-auto p-5 mt-8"
               >
                 <CustomForm onSubmit={onSubmit}>
+                  <div className="flex space-x-1">
                   <FormInput type="text" name="firstName" label="First Name" />
                   <FormInput type="text" name="lastName" label="Last Name" />
+                  </div>
                   <FormInput type="text" name="username" label="User Name" />
                   <FormInput type="email" name="email" label="Email" />
                   <FormInput type="text" name="password" label="Password" />
-                  <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                  <Col span={24} md={{ span: 12 }} lg={{ span: 24 }}>
                     <Controller
                       name="imageLink"
                       render={({ field: { onChange, value, ...field } }) => (
@@ -117,6 +119,21 @@ const Register = () => {
                             onChange={(e) => onChange(e?.target?.files?.[0])}
                           />
                         </Form.Item>
+                      //    <Form.Item  labelCol={{ span: 24 }}
+                      //    label={ <p style={{fontWeight:"500"}}>Image</p> }>
+                      
+                      //    <Controller
+                      //      name="imageLink"
+                      //      render={({ field: { onChange, value, ...field } }) => (
+                      //        <Input
+                      //          {...field}
+                      //          type="file"
+                      //          value={value?.fileName}
+                      //          onChange={(e) => onChange(e?.target?.files?.[0])}
+                      //        />
+                      //      )}
+                      //    />
+                      //  </Form.Item>
                       )}
                     />
                   </Col>

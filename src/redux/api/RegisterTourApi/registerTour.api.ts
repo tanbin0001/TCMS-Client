@@ -9,14 +9,15 @@ const usersApi = baseApi.injectEndpoints({
                 method: "GET",  
                 params: { _id }  
             }),
- 
+ providesTags:['tours']
         }),
         getAllRegisteredTours: builder.query({
             query: () => ({
                 url: '/tour-registration/all-tours',
                 method: "GET",  
            
-            })
+            }),
+            providesTags:['tours']
         }),
         registerTour: builder.mutation({
             query: (data) => ({

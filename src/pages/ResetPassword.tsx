@@ -7,39 +7,49 @@ import { useResetPasswordMutation } from "../redux/api/authApi/authApi";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hooks";
 import { logOut } from "../redux/features/authSlice";
+import { useEffect, useState } from "react";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
   const [resetPassword, { isSuccess, isError, isLoading }] =
     useResetPasswordMutation();
   const dispatch = useAppDispatch();
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tokenFromUrl = searchParams.get("token");
+    if (tokenFromUrl) {
+      setToken(tokenFromUrl);
+    }
+  }, [location.search]);
 
-  const dataString = localStorage.getItem("persist:auth");
-  const data = JSON.parse(dataString as string);
-  const userString = data.user;
-  const user = JSON.parse(userString);
-  const userId = user._id;
+  
 
+  console.log(token,'from token');
   const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading("Logging in");
+    const toastId = toast.loading("Resetting password");
 
     try {
       const newUserInfo = {
-        _id: userId,
+        email: data.email,
         newPassword: data.newPassword,
       };
 
-      const res = await resetPassword(newUserInfo);
+      const res = await resetPassword({newUserInfo,token});
+      console.log(res,'res fro');
       if ((res as any).error ) {
         toast.error((res as any).error.data.message, { id: toastId, duration: 2000 });
       }
 
+      if(isSuccess){
+        
       toast.success("Password reset successful", {
         id: toastId,
         duration: 2000,
       });
-      dispatch(logOut());
+       
       navigate("/login");
+      }
     } catch {
       toast.error("Something went wrong", { id: toastId, duration: 2000 });
     }
@@ -48,6 +58,7 @@ const ResetPassword = () => {
     <div>
       <div className="flex justify-center items-center border min-h-screen">
         <CustomForm onSubmit={onSubmit}>
+          <FormInput type="text" name="email" label="Email" />
           <FormInput type="text" name="newPassword" label="New Password" />
           <Button
             className=" w-96 px-4 py-2 font-bold text-white bg-purple-500 rounded-md hover:bg-purple-700"

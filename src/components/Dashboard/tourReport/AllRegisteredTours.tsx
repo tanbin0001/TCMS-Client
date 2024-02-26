@@ -4,18 +4,12 @@ import TourCards from "./TourCards";
  
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/authSlice";
-import { useEffect } from "react";
-
+ 
 import { useGetMyToursQuery } from "../../../redux/api/RegisterTourApi/registerTour.api";
 
  const AllRegisteredTours = () => {
-   
     const user = useAppSelector(selectCurrentUser);
     const {data} = useGetMyToursQuery(user!._id);
-    console.log(data,'daata');
-  
-  
-    
     const items: TabsProps['items'] = [
         {
           key: '1',
