@@ -1,112 +1,4 @@
-// import { useState } from "react";
-// import { Button, DatePicker, Input, Row, Select } from "antd";
-// import CustomForm from "../../components/form/CustomForm";
-// import CustomSelect from "../../components/form/CustomSelect";
-// import { useGetAllToursQuery } from "../../redux/api/tourApi/tour.api";
-// import { useGetUsersQuery } from "../../redux/api/usersApi/users.api";
-// import CustomDatePicker from "../../components/form/CustomDatePicker";
-// import { useGetMyToursQuery } from "../../redux/api/RegisterTourApi/registerTour.api";
-// import { selectCurrentUser } from "../../redux/features/authSlice";
-// import { useAppSelector } from "../../redux/hooks";
-
-// const RecordExpense = () => {
-//   const { data: userData } = useGetUsersQuery(undefined);
-//   const { data: tourData } = useGetAllToursQuery(undefined);
-
-//   const user = useAppSelector(selectCurrentUser);
-
-//   const {data:myRegisteredTours} = useGetMyToursQuery(user!._id)
-
-// //   const rregisterTourOptions = myRegisteredTours?.data.map((item) =>console.log(item));
-//   const registerTourOptions = myRegisteredTours?.data.map((item) => ({
-//     value: item._id,
-//     label: item.tourId.tourName,
-//   }));
-
-//   const userOptions = userData?.data.map((item) => ({
-//     value: item._id,
-//     label: item.username,
-//   }));
-
-//   const tourOptions = tourData?.data.map((item) => ({
-//     value: item._id,
-//     label: item.tourName,
-//   }));
-
-//   const [expenseData, setExpenseData] = useState({
-//     tourId: "",
-//     registeredTourId: "",
-//     amount: "",
-//     date: null,
-//     description: "",
-//     payer: "",
-//   });
-
-//   const onSubmit = (data) => {
-//     console.log(data);
-//     // Here you can send the 'data' to your backend or perform any further processing
-//   };
-
-//   const handleInputChange = (name, value) => {
-//  ;
-//     setExpenseData({
-//       ...expenseData,
-//       [name]: value,
-//     });
-
-//     console.log(expenseData,'expenseData');
-//   };
-
-//   return (
-//     <div>
-//       <Row justify="center" align="middle" className="mx-auto mt-8">
-//         <CustomForm onSubmit={onSubmit}>
-//           <CustomSelect
-//             options={tourOptions}
-//             name="tourId"
-//             label="Select Tour"
-
-//           />
-//           <CustomSelect
-//             options={registerTourOptions}
-//             name="registeredTourId"
-//             label="Select Registered Tour"
-
-//           />
-//           <Input
-//             type="number"
-//             placeholder="Amount"
-//             onChange={(e) => handleInputChange("amount", e.target.value)}
-//           />
-//             <label className="     text-gray-700 font-semibold">
-//                 Select date
-//                 </label>
-
-//            <CustomDatePicker name="date" label="" />
-//           <Input
-//             placeholder="Description"
-//             onChange={(e) => handleInputChange("description", e.target.value)}
-//           />
-//           <Select
-//             options={userOptions}
-
-//             placeholder="select payer"
-
-//             onChange={(value) => handleInputChange("payer", value)}
-//           />
-//           <Button
-//             className="w-96 px-4 py-2 font-bold text-white bg-purple-500 rounded-md hover:bg-purple-700"
-//             htmlType="submit"
-//           >
-//             Submit
-//           </Button>
-//         </CustomForm>
-//       </Row>
-//     </div>
-//   );
-// };
-
-// export default RecordExpense;
+ 
  
 import { Button,  Row } from "antd";
 import CustomForm from "../../components/form/CustomForm";
@@ -127,7 +19,7 @@ import toast from "react-hot-toast";
 const RecordExpense = () => {
   const { _id } = useParams();
   const { data } = useGetAllRegisteredToursQuery(undefined);
-  const [recordExpense, {isSuccess,isError}] = useRecordExpenseMutation();
+  const [recordExpense, { isError}] = useRecordExpenseMutation();
 
   const tour = data?.data?.filter((item: any) => item._id === _id);
 
@@ -153,7 +45,7 @@ const RecordExpense = () => {
     }
 
  
-    const res = await recordExpense (expenseData)
+  await recordExpense (expenseData)
  
   
       toast.success('Expense recorded successfully', { id: toastId, duration: 2000 })

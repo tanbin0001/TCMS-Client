@@ -2,8 +2,6 @@ import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import DeleteDropDown from "./Products/DeleteDropDown";
 
-import { HiOutlineDuplicate } from "react-icons/hi";
-
 import { useAppSelector } from "../redux/hooks";
 import { selectCurrentUser } from "../redux/features/authSlice";
 import moment from "moment";

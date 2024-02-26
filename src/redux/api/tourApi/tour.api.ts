@@ -6,7 +6,7 @@ const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getAllTours: builder.query({
-      query: (filters) => {
+      query: () => {
       
         return {
           url: `/tour/tours`,

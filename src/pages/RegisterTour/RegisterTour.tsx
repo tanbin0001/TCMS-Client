@@ -1,64 +1,4 @@
-// import { Button, Input, Row, Select } from "antd";
-// import CustomForm from "../../components/form/CustomForm";
-
-// import { useGetUsersQuery } from "../../redux/api/usersApi/users.api";
-// import CustomSelect from "../../components/form/CustomSelect";
-// import { useGetAllToursQuery } from "../../redux/api/tourApi/tour.api";
-
-// const RegisterTour = () => {
-//     const {data:userData} = useGetUsersQuery(undefined);
-//     const {data:tourData} = useGetAllToursQuery(undefined);
-//     console.log(tourData);
-
-//     const userOptions = userData?.data.map((item : any) => ({
-//         value: item._id,
-//         label:item.username
-//     }))
-//     const tourOptions = tourData?.data.map((item : any) => ({
-//         value: item._id,
-//         label:item.tourName
-//     }))
-//     const  onSubmit = (data:any ) => {
-//     console.log(data);
-//     }
-//     const handleChange =()=>{
-
-//     }
-//  return (
-//  <div>
-
-// <Row
-//               justify="center"
-//               align="middle"
-//               className="  mx-auto mt-8      "
-//             >
-//               <CustomForm onSubmit={onSubmit}>
-
-//               <CustomSelect   options={tourOptions} name="tourId" label="Select Tour" />
-//               <Select
-//       mode="multiple"
-//       allowClear
-//       style={{ width: '100%' }}
-//       placeholder="Please select"
-//       defaultValue={['a10', 'c12']}
-//       onChange={handleChange}
-//       options={userOptions}
-//     />
-// <Input placeholder="Select Initial amount" />;
-//                 <Button
-//                   className=" w-96 px-4 py-2 font-bold text-white bg-purple-500 rounded-md hover:bg-purple-700"
-//                   htmlType="submit"
-//                 >
-//             Register Tour
-//                 </Button>
-//               </CustomForm>
-
-//             </Row>
-//  </div>
-//  );
-// };
-
-// export default RegisterTour;
+ 
 
 import { useState } from "react";
 import { Button, Input, Row, Select } from "antd";
@@ -69,7 +9,7 @@ import { useGetAllToursQuery } from "../../redux/api/tourApi/tour.api";
 import { IoAddCircle } from "react-icons/io5"; 
 import { useRegisterTourMutation } from "../../redux/api/RegisterTourApi/registerTour.api";
 const RegisterTour = () => {
-  const [registerTour,{isSuccess}] = useRegisterTourMutation()
+  const [registerTour] = useRegisterTourMutation()
   const { data: userData } = useGetUsersQuery(undefined);
   const { data: tourData } = useGetAllToursQuery(undefined);
 

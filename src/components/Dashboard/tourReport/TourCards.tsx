@@ -1,7 +1,7 @@
 import { Button, Space, Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
 
-const TourCards: React.FC<any> = ({ data: tableData, error }) => {
+const TourCards: React.FC<any> = ({ data: tableData }) => {
  
     
 const columns: TableProps<any>['columns'] = [

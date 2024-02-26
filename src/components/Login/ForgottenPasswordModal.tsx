@@ -22,6 +22,9 @@ const res = await forgetPassword(data)
 
 if(isSuccess){
   toast.success("Password reset link generated successfully, please check your email", { id: toastId, duration: 6000 });
+}else{
+  toast.error("Something went wrong", { id: toastId, duration: 4000 });
+
 }
 console.log(res,'from res ');
  }

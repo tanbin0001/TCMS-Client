@@ -15,7 +15,7 @@ import Spinner from "../../components/shared/Spinner";
 const UpdateTour = () => {
   const { _id } = useParams();
   const { data, isLoading: isGetQueryLoading } = useGetAllToursQuery(undefined);
-  const [updateTour, { isLoading: isUpdateMutationLoading, isSuccess }] =
+  const [updateTour, { isLoading: isUpdateMutationLoading }] =
     useUpdateTourMutation();
 
   const tourItemToUpdate = data?.data?.find(

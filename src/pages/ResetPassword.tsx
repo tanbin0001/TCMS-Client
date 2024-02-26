@@ -5,15 +5,14 @@ import { FieldValues } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useResetPasswordMutation } from "../redux/api/authApi/authApi";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../redux/hooks";
-import { logOut } from "../redux/features/authSlice";
+ 
 import { useEffect, useState } from "react";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const [resetPassword, { isSuccess, isError, isLoading }] =
+  const [resetPassword, { isSuccess, isLoading }] =
     useResetPasswordMutation();
-  const dispatch = useAppDispatch();
+ 
   const [token, setToken] = useState("");
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -24,8 +23,6 @@ const ResetPassword = () => {
   }, [location.search]);
 
   
-
-  console.log(token,'from token');
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Resetting password");
 

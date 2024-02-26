@@ -8,6 +8,9 @@ import toast from "react-hot-toast";
 import "../../styles/Product.css";
 
 import { useGetAllToursQuery } from "../../redux/api/tourApi/tour.api";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../redux/features/authSlice";
+import { useGetUsersQuery } from "../../redux/api/usersApi/users.api";
 
 const AllTours = () => {
   const [searchText, setSearchText] = useState("");
@@ -18,12 +21,21 @@ const AllTours = () => {
     isLoading: isGetQueryLoading,
   } = useGetAllToursQuery(undefined);
 
-  console.log(data);
-
+  const { data:usersData } = useGetUsersQuery(undefined);
+  const currentUser = useSelector(selectCurrentUser);
+  const matchedUser = usersData?.data?.filter((FindingUser: any) => FindingUser._id === currentUser!._id );
+  const selectedUserData = matchedUser && matchedUser.length > 0 ? matchedUser[0] : null;
+  console.log(selectedUserData);
+  
+ 
+  // Filter tours based on the tourCreator property
+  const myTours = data?.data?.filter((tour :any) => tour.tourCreator === selectedUserData.username);
+  console.log(myTours);
+ 
   if (isGetQueryError) {
     toast.error("Failed to get tours");
   }
-  const filteredTours = data?.data?.filter((tour: TTourItem) =>
+  const filteredTours = myTours?.filter((tour: TTourItem) =>
     Object.values(tour).some((value) =>
       value.toString().toLowerCase().includes(searchText.toLowerCase())
     )
@@ -39,10 +51,10 @@ const AllTours = () => {
 
       <div className="  mt-10  flex justify-center ">
       
-        <div className="  border border-red-300">
+        <div className="">
           <input
-            className=" lg:w-96  px-4 py-1    text-lg rounded-md border-2 border-purple-400 text-gray-600 outline-purple-600"
-            placeholder="Search Tours"
+            className=" lg:w-96  px-4 py-1    text-sm rounded-md border-2 border-purple-400 text-gray-600 outline-purple-600"
+            placeholder="Search Tours ⌕.."
             type="text"
             onChange={(e) => setSearchText(e.target.value)}
           />
