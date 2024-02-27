@@ -2,7 +2,7 @@ import { FieldValues } from "react-hook-form";
  
 import { useLoginMutation } from "../redux/api/authApi/authApi";
 import { useAppDispatch } from "../redux/hooks";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { verifyToken } from "../utils/verifyToken";
 import { TUser, setUser } from "../redux/features/authSlice";
@@ -66,21 +66,21 @@ const Login = () => {
      
 
         {/* second div */}
-        <div className="bg-white text-black  w-full     rounded-lg      flex items-center justify-center space-y-2 ">
+        <div className="bg-white text-black  w-full  p-5   rounded-lg      flex items-center justify-center space-y-2 ">
           <div className="text-center     ">
             <h1 className="font-bold text-2xl mb-1">Login to your account</h1>
             <p>
               Don’t have an account?{" "}
-              <a href="/register" className="text-purple-500">
+              <Link to="/register" className="text-purple-500">
                 {" "}
                 Sign Up Free!
-              </a>
+              </Link>
             </p>
 
             <Row
               justify="center"
               align="middle"
-              className="  mx-auto mt-8      "
+              className="  mx-auto mt-8 "
             >
               <div className="  px-3">
               <CustomForm onSubmit={onSubmit}>

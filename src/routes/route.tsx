@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
 
       {
         path: "/register",
-        element: <Register />,
+        element: <AuthRoute element={<Register />} path={'/register'}><Register /></AuthRoute>,
       },
 ])
 
