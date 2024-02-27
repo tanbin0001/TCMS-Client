@@ -66,7 +66,7 @@ const Login = () => {
      
 
         {/* second div */}
-        <div className="bg-white text-black  w-full     rounded-lg  h-[80vh]   flex items-center justify-center space-y-2 ">
+        <div className="bg-white text-black  w-full     rounded-lg      flex items-center justify-center space-y-2 ">
           <div className="text-center     ">
             <h1 className="font-bold text-2xl mb-1">Login to your account</h1>
             <p>
