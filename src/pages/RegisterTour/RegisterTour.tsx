@@ -13,6 +13,7 @@ import { selectCurrentUser } from "../../redux/features/authSlice";
 import toast from "react-hot-toast";
 import { getMessageFromResponse } from "../../utils/ResponseMessage";
 import { useNavigate } from "react-router-dom";
+import Heading from "../../components/shared/Heading";
 const RegisterTour = () => {
   const [registerTour] = useRegisterTourMutation()
   const { data: userData } = useGetUsersQuery(undefined);
@@ -99,6 +100,7 @@ const  emptyFields=[];
 
   return (
     <div>
+      <Heading title="Add Participants"/>
       <Row justify="center" align="middle" className="mx-auto mt-8">
         <CustomForm onSubmit={onSubmit}>
           <CustomSelect
