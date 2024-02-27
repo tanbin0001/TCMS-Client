@@ -12,20 +12,35 @@ import React from "react";
  
 
 
- 
+
 const isAuthenticated = () => {
+
+  const authDataString = localStorage.getItem("persist:auth");
+
  
-  const token = localStorage.getItem("persist:auth");
-  return !!token;  
+  if (authDataString) {
+
+    const authData = JSON.parse(authDataString);
+ 
+
+    const token = authData.token;
+
+    return token && token !== "null";
+  }
+
+  return false;
+
 };
- 
-export const AuthRoute = ({  element } : any) => {
+
+export const AuthRoute = ({  element,path } : any) => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
     if (isAuthenticated()) {
       // Redirect to a different route if the user is authenticated
       navigate("/user/dashboard");
+    }else{
+      navigate(path);
     }
   }, [navigate]);
 
@@ -34,6 +49,7 @@ export const AuthRoute = ({  element } : any) => {
 
 
 
+isAuthenticated()
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -51,15 +67,16 @@ export const router = createBrowserRouter([
        
       {
         path: "/login",
-        element: <AuthRoute><Login /></AuthRoute>,
+        element: <AuthRoute element={<Login />} path={'/login'}><Login /></AuthRoute>,
       },
       {
         path: "/reset-password",
-        element: <AuthRoute><ResetPassword /></AuthRoute>,
+        element: <ResetPassword />,
       },
 
       {
         path: "/register",
-        element: <AuthRoute><Register /></AuthRoute>,
+        element: <Register />,
       },
 ])
+

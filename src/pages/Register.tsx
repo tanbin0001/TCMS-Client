@@ -23,68 +23,141 @@ const Register = () => {
   
 
   const onSubmit = async (data: FieldValues) => {
-
     const emptyFields = [];
-
+  
     // Check for empty fields
     if (!data.firstName) emptyFields.push("Tour Name");
     if (!data.username) emptyFields.push("User Name");
     if (!data.email) emptyFields.push("Email");
-    if (!data.password) emptyFields.push("Password"); 
-  
+    if (!data.password) emptyFields.push("Password");
   
     const toastId = toast.loading("Registration in progress!");
+  
     if (emptyFields.length > 0) {
       toast.error(`The fields are empty: ${emptyFields.join(", ")}`, { id: toastId, duration: 2000 });
       return;
     }
+  
     setLoading(true);
-    const imageFile = data.imageLink;
-    const formData = new FormData();
-    formData.append("image", imageFile);
-
-    try {
-      const response = await fetch(img_hosting_url, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        toast.error("Failed to upload image",{ id: toastId, duration: 2000 });
+  
+    let imageLink = null; // Set imageLink to null by default
+  
+    // Check if an image is provided
+    if (data.imageLink) {
+      const formData = new FormData();
+      formData.append("image", data.imageLink);
+  
+      try {
+        const response = await fetch(img_hosting_url, {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (!response.ok) {
+          toast.error("Failed to upload image", { id: toastId, duration: 2000 });
+        }
+  
+        const imgRes = await response.json();
+        if (imgRes.success) {
+          imageLink = imgRes.data.display_url;
+        }
+      } catch (error) {
+        console.log(error);
       }
-
-      const imgRes = await response.json();
-      if (imgRes.success) {
-        const imageLink = imgRes.data.display_url;
-        const { firstName, lastName, email, username, password } = data;
-        const userInfo = {
-          firstName,
-          lastName,
-          email,
-          username,
-          imageLink,
-          password,
-        };
-
-        const res = await register(userInfo);
-        const successOrError = getMessageFromResponse (res);
-       if(successOrError.success) {
-        toast.success(`${successOrError.message}`,{ id: toastId, duration: 2000 })
-       }else if(successOrError.success === false){
-        toast.error(`${successOrError.message}`,{ id: toastId, duration: 2000 })
-       }
- 
+    }
+  
+    // Proceed with registration
+    const { firstName, lastName, email, username, password } = data;
+    const userInfo = {
+      firstName,
+      lastName,
+      email,
+      username,
+      imageLink, // Assign imageLink whether it's provided or null
+      password,
+    };
+  
+    try {
+      const res = await register(userInfo);
+      const successOrError = getMessageFromResponse(res);
+  
+      if (successOrError.success) {
+        toast.success(`${successOrError.message}`, { id: toastId, duration: 2000 });
         navigate(`/login`);
-
-        
+      } else {
+        toast.error(`${successOrError.message}`, { id: toastId, duration: 2000 });
       }
     } catch (error) {
       console.log(error);
     } finally {
-      
       setLoading(false);
     }
   };
+  
+
+  // const onSubmit = async (data: FieldValues) => {
+
+  //   const emptyFields = [];
+
+  //   // Check for empty fields
+  //   if (!data.firstName) emptyFields.push("Tour Name");
+  //   if (!data.username) emptyFields.push("User Name");
+  //   if (!data.email) emptyFields.push("Email");
+  //   if (!data.password) emptyFields.push("Password"); 
+  
+  
+  //   const toastId = toast.loading("Registration in progress!");
+  //   if (emptyFields.length > 0) {
+  //     toast.error(`The fields are empty: ${emptyFields.join(", ")}`, { id: toastId, duration: 2000 });
+  //     return;
+  //   }
+  //   setLoading(true);
+  //   const imageFile = data.imageLink;
+  //   const formData = new FormData();
+  //   formData.append("image", imageFile);
+
+  //   try {
+  //     const response = await fetch(img_hosting_url, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     if (!response.ok) {
+  //       toast.error("Failed to upload image",{ id: toastId, duration: 2000 });
+  //     }
+
+  //     const imgRes = await response.json();
+  //     if (imgRes.success) {
+  //       const imageLink = imgRes.data.display_url;
+  //       const { firstName, lastName, email, username, password } = data;
+  //       const userInfo = {
+  //         firstName,
+  //         lastName,
+  //         email,
+  //         username,
+  //         imageLink,
+  //         password,
+  //       };
+
+  //       const res = await register(userInfo);
+  //       const successOrError = getMessageFromResponse (res);
+  //      if(successOrError.success) {
+  //       toast.success(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+  //      }else if(successOrError.success === false){
+  //       toast.error(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+  //      }
+ 
+  //       navigate(`/login`);
+
+        
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+      
+  //     setLoading(false);
+  //   }
+  // };
 
   const backgroundStyle = {
     backgroundImage:

@@ -23,14 +23,14 @@ const Dashboard = () => {
   return (
     <div>
       <div className="bg-gray-300 w-80    text-center rounded-md space-y-5  p-3 items-center    flex  text-black">
-        {selectedUserData.imageLink ? (
+        {selectedUserData?.imageLink ? (
           <img
-            src={selectedUserData.imageLink}
+            src={selectedUserData?.imageLink}
             alt="User Image"
             className="w-14 h-14 rounded-full object-cover"
           />
         ) : (
-          <FaRegUserCircle className="text-3xl mt-9 flex justify-end w-full mr-2 size-14" />
+          <FaRegUserCircle className=" w-14 h-14 rounded-full " />
         )}
         <div>
           <h1>

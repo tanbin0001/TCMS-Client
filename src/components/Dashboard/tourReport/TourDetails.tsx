@@ -7,7 +7,7 @@ const TourDetails = () => {
     const {data} = useGetAllRegisteredToursQuery(undefined);
  
     const tour =  data?.data?.filter( (item:any)  => item._id === _id )
-    console.log(tour);
+ 
  
     return (
         

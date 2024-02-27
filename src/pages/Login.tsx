@@ -12,6 +12,7 @@ import CustomForm from "../components/form/CustomForm";
 import FormInput from "../components/form/FormInput";
 import ForgottenPasswordModal from "../components/Login/ForgottenPasswordModal";
 import { getMessageFromResponse } from "../utils/ResponseMessage";
+import Spinner from "../components/shared/Spinner";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Login = () => {
         password: data.password,
       };
       const res = await login(userInfo).unwrap();
+      console.log(res);
       const successOrError = getMessageFromResponse(res);
       const user = verifyToken(res.data.token) as TUser;
       dispatch(setUser({ user: user, token: res.data.token }));
@@ -41,6 +43,10 @@ const Login = () => {
      
     }
   };
+
+  if(isLoading) {
+    return <Spinner/>
+  }
   
   const backgroundStyle = {
     backgroundImage:
