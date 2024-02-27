@@ -8,17 +8,35 @@ import CustomSelect from "../../components/form/CustomSelect";
 import { useGetAllToursQuery } from "../../redux/api/tourApi/tour.api";
 import { IoAddCircle } from "react-icons/io5"; 
 import { useRegisterTourMutation } from "../../redux/api/RegisterTourApi/registerTour.api";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../redux/features/authSlice";
+import toast from "react-hot-toast";
+import { getMessageFromResponse } from "../../utils/ResponseMessage";
+import { useNavigate } from "react-router-dom";
 const RegisterTour = () => {
   const [registerTour] = useRegisterTourMutation()
   const { data: userData } = useGetUsersQuery(undefined);
   const { data: tourData } = useGetAllToursQuery(undefined);
+  const navigate = useNavigate();
+
+  const currentUser = useSelector(selectCurrentUser);
+  const matchedUser = userData?.data?.filter(
+    (FindingUser: any) => FindingUser._id === currentUser!._id
+  );
+  const selectedUserData =
+    matchedUser && matchedUser.length > 0 ? matchedUser[0] : null;
+
+  // Filter tours based on the tourCreator property
+  const myTours = tourData?.data?.filter(
+    (tour: any) => tour?.tourCreator === selectedUserData?.username
+  );
 
   const userOptions = userData?.data.map((item: any) => ({
     value: item._id,
     label: item.username,
   }));
 
-  const tourOptions = tourData?.data.map((item: any) => ({
+  const tourOptions = myTours?.map((item: any) => ({
     value: item._id,
     label: item.tourName,
   }));
@@ -28,12 +46,38 @@ const RegisterTour = () => {
   ]);
 
   const onSubmit =async (data: any) => {
+
     const requestData = {
       tourId: data.tourId,
       participants,
     };
+console.log(requestData);
+     
+    const toastId = toast.loading("registering tour");
+const  emptyFields=[];
+    if (!requestData.tourId) emptyFields.push("Tour Name");
+   
+
+  if (requestData.participants[0].userId ==='') {
+      emptyFields.push("Participants");
+  }
+ 
+  if (emptyFields.length > 0) {
+    toast.error(`The fields are empty: ${emptyFields.join(", ")}`, { id: toastId, duration: 2000 });
+    return;}
+
+
 
  const res = await registerTour(requestData)
+ const successOrError = getMessageFromResponse(res);
+ if(res){
+  toast.success(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+  navigate(`/user/dashboard`);
+  
+} else if(successOrError.success === false){
+  toast.error(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+ }
+ 
  
   };
 
@@ -97,7 +141,7 @@ const RegisterTour = () => {
             <IoAddCircle />
           </Button>
           <Button
-            className="w-96 px-4 py-2 font-bold text-white bg-purple-500 rounded-md hover:bg-purple-700"
+            className="w-96 px-4   font-bold text-white bg-purple-500 rounded-md hover:bg-purple-700"
             htmlType="submit"
           >
             Register Tour

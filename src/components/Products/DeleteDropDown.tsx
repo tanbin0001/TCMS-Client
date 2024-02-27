@@ -18,7 +18,7 @@ const DeleteDropDown: React.FC<DeleteDropDownProps> = ({_id}) => {
     
     const items: MenuProps['items'] = [
         {
-          label: 'Delete Product',
+          label: 'Delete Tour',
           key: '1',
         },
         

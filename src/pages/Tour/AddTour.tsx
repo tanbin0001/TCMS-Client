@@ -15,10 +15,11 @@ import { useEffect, useState } from "react";
 import CustomDatePicker from "../../components/form/CustomDatePicker";
 import { useCreateTourMutation } from "../../redux/api/tourApi/tour.api";
 
-const image_hosting_token = "d90ae3f3d54ab3247df92c0620d25ddf";
+const image_hosting_token = "0f036a7553610b9f1abaf96dabed4168";
 import { Col, Form, Input } from "antd";
 import CustomForm from "../../components/form/CustomForm";
 import { Controller } from "react-hook-form";
+import { getMessageFromResponse } from "../../utils/ResponseMessage";
 
 const AddTour = () => {
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
@@ -33,53 +34,91 @@ const AddTour = () => {
   );
 
   useEffect(() => {
-    if (matchedUser) {
+    if (matchedUser) { 
       setMatchedUserName(matchedUser[0].username);
     }
   }, [matchedUser]);
 
-  const [createTour, { isLoading, isSuccess }] = useCreateTourMutation();
+  const [createTour, { isLoading }] = useCreateTourMutation();
 
-  if (isSuccess) {
-    toast.success("Tour Added successfully");
-  }
+  
   if (isLoading) {
     return <Spinner />;
   }
   if (!matchedUserName) {
     return <Spinner />;
   }
-
+ 
   const onSubmit = async (data: any) => {
-    const imageFile = data.imageLink;
-    console.log(imageFile);
+    const toastId = toast.loading("creating tour");
+    
+    const emptyFields = [];
 
+    // Check for empty fields
+    if (!data.tourName) emptyFields.push("Tour Name");
+    if (!data.imageLink) emptyFields.push("Image Link");
+    if (!data.destination) emptyFields.push("Destination");
+    if (!data.tourCreator) emptyFields.push("Tour Creator");
+    if (!data.startDate) emptyFields.push("Start Date");
+    if (!data.endDate) emptyFields.push("End Date");
+  
+  
+    if (emptyFields.length > 0) {
+      toast.error(`The fields are empty: ${emptyFields.join(", ")}`, { id: toastId, duration: 2000 });
+      return;
+    }
+    try{
+
+    
+    const imageFile = data.imageLink;
     const formData = new FormData();
     formData.append("image", imageFile);
 
-    fetch(img_hosting_url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imgRes) => {
-        if (imgRes.success) {
-          const imageLink = imgRes.data.display_url;
-          const { tourName, destination, tourCreator, startDate, endDate } =
-            data;
-          const tourData = {
-            tourName,
-            destination,
-            tourCreator,
-            imageLink,
-            startDate,
-            endDate,
-          };
-          const res = createTour(tourData);
-          console.log(res);
+   
+  
+    try {
+      const response = await fetch(img_hosting_url, {
+        method: "POST",
+        body: formData 
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
+  
+      const imgRes = await response.json();
+   
+      if (imgRes.success) {
+        const imageLink = imgRes.data.display_url;
+        const { tourName, destination, tourCreator, startDate, endDate } = data;
+        const tourData = {
+          tourName,
+          destination,
+          tourCreator,
+          imageLink,
+          startDate,
+          endDate,
+        };
+        
+
+        const res = await createTour(tourData);
+        if(res){
+          const successOrError = getMessageFromResponse(res);
+          console.log(successOrError);
+      
+          toast.success(`${successOrError.message}`,{ id: toastId, duration: 2000 })
         }
-      })
-      .catch((error) => console.error("Error uploading image:", error));
+ 
+       
+      }
+    } catch (error) {
+      console.log("Error uploading image:");
+    }
+  }catch (error){
+    const successOrError = getMessageFromResponse(error);
+    
+        toast.error(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+  }
   };
 
   const divClass = "grid grid-cols-2 gap-2";
@@ -127,7 +166,7 @@ const AddTour = () => {
             <CustomDatePicker name="endDate" label="End Date" />
           </div>
 
-          <GenericButton value="Add Product" icon={<IoBagAdd />} />
+          <GenericButton value="Create Tour" icon={<IoBagAdd />} />
         </CustomForm>
       </div>
     </div>

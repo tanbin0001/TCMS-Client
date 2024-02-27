@@ -11,7 +11,7 @@ type TInputProps = {
 
 const FormInput = ({ type, name, label, defaultValue,disabled }: TInputProps) => {
   return (
-    <div className="mb-4  text-start">
+    <div className="   text-start">
       {label ? (
         <label className="     text-gray-700 font-semibold">{label}</label>
       ) : null}

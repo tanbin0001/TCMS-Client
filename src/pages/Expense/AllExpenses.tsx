@@ -43,7 +43,7 @@ useEffect(() => {
 },[data])
  
  
-  //   // Define columns for the table
+   // Define columns for the table
     const columns = [
       {
         title: 'Tour Name',
@@ -71,7 +71,14 @@ useEffect(() => {
         title: 'Payer',
         dataIndex: 'payer',
         key: 'payer',
-        render: (payer : PayerType) => `${payer.firstName} ${payer.lastName}`,
+        render: (payer: PayerType) => {
+          if (payer.lastName) {
+              return `${payer.firstName} ${payer.lastName}`;
+          } else {
+              return payer.firstName;
+          }
+      }
+      
       },
     ];
 
@@ -91,7 +98,7 @@ useEffect(() => {
       <Table
         columns={columns}
         dataSource={tableData}
-        rowKey="_id" // Assuming _id is unique for each expense
+        rowKey="_id"  
       />
     </div>
   );

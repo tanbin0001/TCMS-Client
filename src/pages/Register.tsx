@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import CustomForm from "../components/form/CustomForm";
 import Spinner from "../components/shared/Spinner";
 import { useState } from "react";
+import { getMessageFromResponse } from "../utils/ResponseMessage";
 
 const image_hosting_token = "d90ae3f3d54ab3247df92c0620d25ddf";
 const Register = () => {
@@ -22,9 +23,22 @@ const Register = () => {
   
 
   const onSubmit = async (data: FieldValues) => {
- 
-    setLoading(true);
 
+    const emptyFields = [];
+
+    // Check for empty fields
+    if (!data.firstName) emptyFields.push("Tour Name");
+    if (!data.username) emptyFields.push("User Name");
+    if (!data.email) emptyFields.push("Email");
+    if (!data.password) emptyFields.push("Password"); 
+  
+  
+    const toastId = toast.loading("Registration in progress!");
+    if (emptyFields.length > 0) {
+      toast.error(`The fields are empty: ${emptyFields.join(", ")}`, { id: toastId, duration: 2000 });
+      return;
+    }
+    setLoading(true);
     const imageFile = data.imageLink;
     const formData = new FormData();
     formData.append("image", imageFile);
@@ -36,7 +50,7 @@ const Register = () => {
       });
 
       if (!response.ok) {
-        toast.error("Failed to upload image");
+        toast.error("Failed to upload image",{ id: toastId, duration: 2000 });
       }
 
       const imgRes = await response.json();
@@ -53,15 +67,19 @@ const Register = () => {
         };
 
         const res = await register(userInfo);
-        navigate(`/login`);
-     toast.success("Registration Success");
-
-       if(!res){
-        toast.error('Something went wrong')
+        const successOrError = getMessageFromResponse (res);
+       if(successOrError.success) {
+        toast.success(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+       }else if(successOrError.success === false){
+        toast.error(`${successOrError.message}`,{ id: toastId, duration: 2000 })
        }
+ 
+        navigate(`/login`);
+
+        
       }
     } catch (error) {
-     toast.error("Error uploading image");
+      console.log(error);
     } finally {
       
       setLoading(false);
@@ -87,20 +105,23 @@ const Register = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="lg:flex">
+        <div className=" ">
        
           {/* second div */}
-          <div className="bg-white text-black     lg:flex items-center space-y-2 ">
-            <div className="text-center login-container">
+          <div className="bg-white text-black rounded-md py-3 lg:w-full   lg:flex items-center space-y-2 ">
+            <div className="text-center  ">
               <h1 className="font-bold text-2xl my-2">Sign up for free!</h1>
 
               <Row
                 justify="center"
                 align="middle"
-                className="max-w-md mx-auto p-5 mt-8"
+                className="lg:max-w-md mx-auto p-5 mt-8"
               >
+                  <div className="  px-3 ">
+
+               
                 <CustomForm onSubmit={onSubmit}>
-                  <div className="flex space-x-1">
+                  <div className="lg:flex space-x-1">
                   <FormInput type="text" name="firstName" label="First Name" />
                   <FormInput type="text" name="lastName" label="Last Name" />
                   </div>
@@ -119,21 +140,7 @@ const Register = () => {
                             onChange={(e) => onChange(e?.target?.files?.[0])}
                           />
                         </Form.Item>
-                      //    <Form.Item  labelCol={{ span: 24 }}
-                      //    label={ <p style={{fontWeight:"500"}}>Image</p> }>
-                      
-                      //    <Controller
-                      //      name="imageLink"
-                      //      render={({ field: { onChange, value, ...field } }) => (
-                      //        <Input
-                      //          {...field}
-                      //          type="file"
-                      //          value={value?.fileName}
-                      //          onChange={(e) => onChange(e?.target?.files?.[0])}
-                      //        />
-                      //      )}
-                      //    />
-                      //  </Form.Item>
+                       
                       )}
                     />
                   </Col>
@@ -144,6 +151,7 @@ const Register = () => {
                     {isLoading ? "Signing Up" : "Sign Up"}
                   </Button>
                 </CustomForm>
+                 </div>
               </Row>
               <p className="text-purple-400">
                 <a href="/login">Already have an account?</a>

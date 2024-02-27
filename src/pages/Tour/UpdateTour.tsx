@@ -11,7 +11,9 @@ import CustomDatePicker from "../../components/form/CustomDatePicker";
 import { CiEdit } from "react-icons/ci";
 import GenericButton from "../../components/form/GenericButton";
 import Spinner from "../../components/shared/Spinner";
-
+import { getMessageFromResponse } from "../../utils/ResponseMessage";
+import toast from "react-hot-toast";
+ 
 const UpdateTour = () => {
   const { _id } = useParams();
   const { data, isLoading: isGetQueryLoading } = useGetAllToursQuery(undefined);
@@ -25,6 +27,10 @@ const UpdateTour = () => {
   const { tourName, tourCreator, destination } = tourItemToUpdate || {};
 
   const onSubmit = async (data: any) => {
+    const toastId = toast.loading("updating tour");
+    try{
+
+    
     const tourInfo: any = {};
     for (const key in data) {
       if (data[key] !== undefined) {
@@ -32,10 +38,18 @@ const UpdateTour = () => {
       }
     }
 
-    console.log(tourInfo);
+ 
 
-    const res = updateTour({ tourInfo, _id });
-    console.log(res);
+    const res = await updateTour({ tourInfo, _id }).unwrap();
+     
+
+    const successOrError = getMessageFromResponse(res);
+    
+    toast.success(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+  }catch(error){
+    const successOrError = getMessageFromResponse(error);
+    toast.error(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+  }
   };
   if (isGetQueryLoading || isUpdateMutationLoading) {
     return <Spinner />;

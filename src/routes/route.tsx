@@ -1,5 +1,5 @@
 
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, useNavigate } from "react-router-dom";
 import { routeGenerator } from "../utils/routeGenetor";
  
 import App from "../App";
@@ -8,7 +8,30 @@ import Register from "../pages/Register";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import { userRoutePaths } from "./userRoutes";
 import ResetPassword from "../pages/ResetPassword";
+import React from "react";
  
+
+
+ 
+const isAuthenticated = () => {
+ 
+  const token = localStorage.getItem("persist:auth");
+  return !!token;  
+};
+ 
+export const AuthRoute = ({  element } : any) => {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (isAuthenticated()) {
+      // Redirect to a different route if the user is authenticated
+      navigate("/user/dashboard");
+    }
+  }, [navigate]);
+
+  return <>{element}</>;
+};
+
 
 
 export const router = createBrowserRouter([
@@ -28,15 +51,15 @@ export const router = createBrowserRouter([
        
       {
         path: "/login",
-        element: <Login />,
+        element: <AuthRoute><Login /></AuthRoute>,
       },
       {
         path: "/reset-password",
-        element: <ResetPassword />,
+        element: <AuthRoute><ResetPassword /></AuthRoute>,
       },
 
       {
         path: "/register",
-        element: <Register />,
+        element: <AuthRoute><Register /></AuthRoute>,
       },
 ])

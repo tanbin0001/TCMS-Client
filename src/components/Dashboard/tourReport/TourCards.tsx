@@ -1,87 +1,32 @@
-import { Button, Space, Table, TableProps } from "antd";
+
+
+import {  Card } from "antd";
 import { Link } from "react-router-dom";
 
 const TourCards: React.FC<any> = ({ data: tableData }) => {
- 
-    
-const columns: TableProps<any>['columns'] = [
-    {
-      title: 'Tour Name',
-      dataIndex: ['tourId', 'tourName'],
-      key: 'tourName',
-      render: (text) => <a>{text}</a>,
-    },
-   
-    {
-      title: 'Tour Creator',
-      dataIndex: ['tourId', 'tourCreator'],
-      key: 'buyerName',
-    },
-    {
-      title: 'Destination',
-      dataIndex: ['tourId', 'destination'],
-      key: 'buyerName',
-    } ,
-   
-    
-   
-    
-    {
-      title: 'Action',
-      key: 'action',
-      render: (item) => {
-       return(
-        <Space size="middle">
-   <Link to={`/user/tour-details/${item._id}`}>
-    <Button>More Details</Button>
-  </Link>
-  
-             </Space>
-       )
-      },
-    }, 
-    {
-      title: 'Record Expense',
-      key: 'action',
-      render: (item) => {
-        console.log(item,'from item');
-       return(
-        <Space size="middle">
-   <Link to={`/user/record-expense/${item._id}`}>
-   <Button>Record Expense</Button>
-  </Link>
-  
-             </Space>
-       )
-      },
-    } ,
-    {
-      title: 'Expense Details',
-      key: 'action',
-      render: (item) => {
-        console.log(item,'from item');
-       return(
-        <Space size="middle">
-   <Link to={`/user/expenses-summary/${item._id}`}>
-   <Button> expense details</Button>
-  </Link>
-  
-             </Space>
-       )
-      },
-    } 
-   
-  ];
   return (
-    <div>
-  
-      <Table columns={columns} dataSource={tableData?.data || []} />
-   
-   
-   
-  {/* {tableData?.data?.sales.length >0 &&  <SellReportModal data={tableData!.data} />} */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {tableData?.data.map((item: any) => (
+        
+        <Card key={item._id} title={item.tourId.tourName} >
+    <img className="rounded-md mb-2" src={item.tourId.imageLink}  alt="Tour Image" />
+          <p><strong>Tour Creator:</strong> {item.tourId.tourCreator}</p>
+          <p><strong>Destination:</strong> {item.tourId.destination}</p>
+          <div className=" m">
+            <Link to={`/user/tour-details/${item._id}`}>
+              <button className="bg-purple-300 py-1 px-2  border rounded-md">More Details</button>
+            </Link>
+            <Link to={`/user/record-expense/${item._id}`}>
+              <button className="bg-purple-300 py-1 px-2  mx-1 my-2 border rounded-md">Record Expense</button>
+            </Link>
+            <Link to={`/user/expenses-summary/${item._id}`}>
+              <button className="bg-purple-300 py-1 px-2  border rounded-md">Expense Details</button>
+            </Link>
+          </div>
+        </Card>
+      ))}
     </div>
-    );
+  );
 };
 
 export default TourCards;

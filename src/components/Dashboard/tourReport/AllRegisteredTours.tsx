@@ -10,6 +10,7 @@ import { useGetMyToursQuery } from "../../../redux/api/RegisterTourApi/registerT
  const AllRegisteredTours = () => {
     const user = useAppSelector(selectCurrentUser);
     const {data} = useGetMyToursQuery(user!._id);
+    
     const items: TabsProps['items'] = [
         {
           key: '1',

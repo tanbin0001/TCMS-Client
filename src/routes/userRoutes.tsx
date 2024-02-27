@@ -28,7 +28,7 @@ export const userRoutePaths = [
     element: <AllTours />,
   },
   {
-    name: "Register Tour",
+    name: "Add Participants",
     path: "register-tour",
     element: <RegisterTour />,
   },
@@ -50,11 +50,7 @@ export const userRoutePaths = [
     path: "expenses-summary/:_id",
     element: <AllExpenses />,
   },
-  // {
-  //   name: "Record Expense",
-  //   path: "record-expense",
-  //   element: <RecordExpense />,
-  // },
+ 
   
    
  
