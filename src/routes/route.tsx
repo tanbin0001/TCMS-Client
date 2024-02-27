@@ -48,8 +48,7 @@ export const AuthRoute = ({  element,path } : any) => {
 };
 
 
-
-isAuthenticated()
+ 
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -71,7 +70,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/reset-password",
-        element: <ResetPassword />,
+        element:<AuthRoute element={<ResetPassword />} path={'/reset-password'}><ResetPassword /></AuthRoute>,
       },
 
       {

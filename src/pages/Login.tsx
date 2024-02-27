@@ -28,6 +28,7 @@ const Login = () => {
         username: data.username,
         password: data.password,
       };
+      
       const res = await login(userInfo).unwrap();
       console.log(res);
       const successOrError = getMessageFromResponse(res);

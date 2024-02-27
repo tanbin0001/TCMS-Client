@@ -4,29 +4,48 @@ import CustomForm from "../form/CustomForm";
 import FormInput from "../form/FormInput";
 import { useForgetPasswordMutation } from "../../redux/api/authApi/authApi";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { getMessageFromResponse } from "../../utils/ResponseMessage";
 
 
  
 const ForgottenPasswordModal = () => {
  
     const [isModalOpen, setIsModalOpen] = useState(false);
- const [forgetPassword,{isSuccess}] = useForgetPasswordMutation()
-  
+ const [forgetPassword] = useForgetPasswordMutation()
+ const navigate = useNavigate();
  
   
  const onSubmit= async(data :any)=> {
+
+
+  const emptyFields = [];
+
+  // Check for empty fields
+  if (!data.email) emptyFields.push("Email");
+ 
   const toastId = toast.loading("Generating reset password link");
+ 
+
+  if (emptyFields.length > 0) {
+    toast.error(` This field empty: ${emptyFields.join(", ")}`, {
+      id: toastId,
+      duration: 2000,
+    });
+    return;
+  }
+
 console.log(data);
 const res = await forgetPassword(data)
 
+const successOrError = getMessageFromResponse(res);
 
-if(isSuccess){
+if (successOrError.success) {
   toast.success("Password reset link generated successfully, please check your email", { id: toastId, duration: 6000 });
-}else{
-  toast.error("Something went wrong", { id: toastId, duration: 4000 });
-
-}
-console.log(res,'from res ');
+ 
+} 
+ 
+ 
  }
   
     const showModal = () => {

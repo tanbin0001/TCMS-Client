@@ -7,6 +7,7 @@ import { useResetPasswordMutation } from "../redux/api/authApi/authApi";
 import { useNavigate } from "react-router-dom";
  
 import { useEffect, useState } from "react";
+import { getMessageFromResponse } from "../utils/ResponseMessage";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -24,7 +25,25 @@ const ResetPassword = () => {
 
   
   const onSubmit = async (data: FieldValues) => {
+
+    const emptyFields = [];
+
+    // Check for empty fields
+    if (!data.email) emptyFields.push("Email");
+    if (!data.newPassword) emptyFields.push("New Password");
+  
+
+
     const toastId = toast.loading("Resetting password");
+
+    if (emptyFields.length > 0) {
+      toast.error(`please provide  ${emptyFields.join(", ")} `, {
+        id: toastId,
+        duration: 2000,
+      });
+      return;
+    }
+
 
     try {
       const newUserInfo = {
@@ -33,20 +52,19 @@ const ResetPassword = () => {
       };
 
       const res = await resetPassword({newUserInfo,token});
-      console.log(res,'res fro');
-      if ((res as any).error ) {
-        toast.error((res as any).error.data.message, { id: toastId, duration: 2000 });
-      }
+      const successOrError = getMessageFromResponse(res);
 
-      if(isSuccess){
+      if (successOrError.success) {
+        toast.success(`${successOrError.message}`, {
+          id: toastId,
+          duration: 2000,
+        });
+        navigate(`/login`);
+      } 
         
-      toast.success("Password reset successful", {
-        id: toastId,
-        duration: 2000,
-      });
-       
+      
       navigate("/login");
-      }
+ 
     } catch {
       toast.error("Something went wrong", { id: toastId, duration: 2000 });
     }
