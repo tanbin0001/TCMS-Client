@@ -20,7 +20,7 @@
  
  ```
 git clone [repository-url]
-cd  Sports-items-management-dashboard-client
+cd  <folder>
 ```
 
 #### Install Dependencies:
