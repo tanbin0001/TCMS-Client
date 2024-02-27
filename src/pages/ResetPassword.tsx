@@ -11,7 +11,7 @@ import { getMessageFromResponse } from "../utils/ResponseMessage";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const [resetPassword, { isSuccess, isLoading }] =
+  const [resetPassword, {  isLoading }] =
     useResetPasswordMutation();
  
   const [token, setToken] = useState("");

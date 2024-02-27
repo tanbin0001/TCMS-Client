@@ -4,7 +4,7 @@ import CustomForm from "../form/CustomForm";
 import FormInput from "../form/FormInput";
 import { useForgetPasswordMutation } from "../../redux/api/authApi/authApi";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+ 
 import { getMessageFromResponse } from "../../utils/ResponseMessage";
 
 
@@ -13,7 +13,7 @@ const ForgottenPasswordModal = () => {
  
     const [isModalOpen, setIsModalOpen] = useState(false);
  const [forgetPassword] = useForgetPasswordMutation()
- const navigate = useNavigate();
+  
  
   
  const onSubmit= async(data :any)=> {
