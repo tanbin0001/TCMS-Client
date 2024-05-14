@@ -50,6 +50,6 @@ const Sidebar = () => {
       />
     </Sider>
   );
-};
+};    
 
 export default Sidebar;
