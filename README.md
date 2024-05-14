@@ -1,14 +1,15 @@
-# Sports Items Management Dashboard Client
+# Tour Compass ( A tour cost management system )
+
 
 
 
 ### Introduction
 
-- 🌐 The Sports Items Management Dashboard provides a centralized platform for efficiently organizing and tracking various sports-related inventory and resources, streamlining management processes for sports equipment and accessories. 🛒✨
+- 🌐 The Tour Compass is a comprehensive tour cost management system designed to streamline the financial aspects of travel operations. . ✨
 
 
  
- * Live Link : https://sports-item-management-system.netlify.app/
+ * Live Link : [https://tour-compass.netlify.app/login](https://tour-compass.netlify.app/login)
 
 
 
@@ -19,7 +20,7 @@
  
  ```
 git clone [repository-url]
-cd  Sports-items-management-dashboard-client
+cd  <folder>
 ```
 
 #### Install Dependencies:
@@ -41,18 +42,8 @@ npm run lint
 
 ```
 
-# Demo Images
-*  Dashboard
-  ![img1](https://files.catbox.moe/p2bwrj.png)
-
-
-*  Products Page
-  ![img2](https://files.catbox.moe/3kcc81.png)
  
-## Feedback
-
-If you have any feedback, please reach out to us at ashrafuj.jaman.tanbin@gmail.com
-
+ 
 
 ## 🔗 Links
 [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ashrafuj-jaman-s-porfolio.vercel.app/)
