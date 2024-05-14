@@ -40,12 +40,15 @@ const UpdateTour = () => {
 
  
 
-    const res = await updateTour({ tourInfo, _id }).unwrap();
+    const res = await updateTour({ tourInfo, _id });
+    console.log(res);
      
 
     const successOrError = getMessageFromResponse(res);
     
-    toast.success(`${successOrError.message}`,{ id: toastId, duration: 2000 })
+if(successOrError.success === true) {
+  toast.success(`Tour updated successfully`,{ id: toastId, duration: 2000 })
+} 
   }catch(error){
     const successOrError = getMessageFromResponse(error);
     toast.error(`${successOrError.message}`,{ id: toastId, duration: 2000 })

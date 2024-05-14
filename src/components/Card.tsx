@@ -52,7 +52,8 @@ const Card: React.FC<{ product: TTourItem }> = ({ product }) => {
           </div>
           <div className="mb-4">
             <p className="text-gray-700">
-              <span className="font-bold">Start Date:</span> {formattedStartDate}
+              <span className="font-bold">Start Date:</span>{" "}
+              {formattedStartDate}
             </p>
             <p className="text-gray-700">
               <span className="font-bold">End Date:</span> {formattedEndDate}
@@ -60,7 +61,8 @@ const Card: React.FC<{ product: TTourItem }> = ({ product }) => {
           </div>
           <div className="mb-4">
             <p className="text-gray-700">
-              <span className="font-bold">Total Duration:</span> {totalDurationDays} days
+              <span className="font-bold">Total Duration:</span>{" "}
+              {totalDurationDays} days
             </p>
           </div>
           <div className="flex items-center  ">

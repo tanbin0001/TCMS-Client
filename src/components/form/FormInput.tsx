@@ -6,10 +6,16 @@ type TInputProps = {
   name: string;
   label?: string;
   defaultValue?: string;
-  disabled?:boolean | undefined;
+  disabled?: boolean | undefined;
 };
 
-const FormInput = ({ type, name, label, defaultValue,disabled }: TInputProps) => {
+const FormInput = ({
+  type,
+  name,
+  label,
+  defaultValue,
+  disabled,
+}: TInputProps) => {
   return (
     <div className="   text-start">
       {label ? (

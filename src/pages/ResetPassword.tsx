@@ -5,15 +5,14 @@ import { FieldValues } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useResetPasswordMutation } from "../redux/api/authApi/authApi";
 import { useNavigate } from "react-router-dom";
- 
+
 import { useEffect, useState } from "react";
 import { getMessageFromResponse } from "../utils/ResponseMessage";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const [resetPassword, {  isLoading }] =
-    useResetPasswordMutation();
- 
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+
   const [token, setToken] = useState("");
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -23,16 +22,12 @@ const ResetPassword = () => {
     }
   }, [location.search]);
 
-  
   const onSubmit = async (data: FieldValues) => {
-
     const emptyFields = [];
 
     // Check for empty fields
     if (!data.email) emptyFields.push("Email");
     if (!data.newPassword) emptyFields.push("New Password");
-  
-
 
     const toastId = toast.loading("Resetting password");
 
@@ -44,14 +39,13 @@ const ResetPassword = () => {
       return;
     }
 
-
     try {
       const newUserInfo = {
         email: data.email,
         newPassword: data.newPassword,
       };
 
-      const res = await resetPassword({newUserInfo,token});
+      const res = await resetPassword({ newUserInfo, token });
       const successOrError = getMessageFromResponse(res);
 
       if (successOrError.success) {
@@ -60,11 +54,9 @@ const ResetPassword = () => {
           duration: 2000,
         });
         navigate(`/login`);
-      } 
-        
-      
+      }
+
       navigate("/login");
- 
     } catch {
       toast.error("Something went wrong", { id: toastId, duration: 2000 });
     }
@@ -80,7 +72,6 @@ const ResetPassword = () => {
             htmlType="submit"
           >
             {isLoading ? "  Resetting Password" : "  Reset Password"}
-         
           </Button>
         </CustomForm>
       </div>

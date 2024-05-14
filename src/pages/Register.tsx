@@ -82,20 +82,16 @@ const Register = () => {
     };
 
     try {
-      const res = await register(userInfo);
-      const successOrError = getMessageFromResponse(res);
-
-      if (successOrError.success) {
-        toast.success(`${successOrError.message}`, {
-          id: toastId,
-          duration: 2000,
-        });
+      const res :any= await register(userInfo);
+   
+      if(res?.data?.success === true){
+        toast.success(res?.data?.message, {
+           id: toastId,
+           duration: 2000,
+         });
         navigate(`/login`);
       } else {
-        toast.error(`${successOrError.message}`, {
-          id: toastId,
-          duration: 2000,
-        });
+        toast.error(res?.error?.data?.errorMessage,{ id: toastId, duration: 2000 })
       }
     } catch (error) {
       console.log(error);

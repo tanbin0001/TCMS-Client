@@ -35,7 +35,7 @@ const AddTour = () => {
 
   useEffect(() => {
     if (matchedUser) { 
-      setMatchedUserName(matchedUser[0].username);
+      setMatchedUserName(matchedUser[0]?.username);
     }
   }, [matchedUser]);
 
@@ -100,6 +100,7 @@ const AddTour = () => {
           endDate,
         };
         
+        console.log(tourData);
 
         const res = await createTour(tourData);
         if(res){

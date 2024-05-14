@@ -11,6 +11,7 @@ import Spinner from "../../components/shared/Spinner";
 import { useRecordExpenseMutation } from "../../redux/api/ExpenseApi/expense.api";
 import toast from "react-hot-toast";
 import { getMessageFromResponse } from "../../utils/ResponseMessage";
+import Heading from "../../components/shared/Heading";
 
 const RecordExpense = () => {
   const { _id } = useParams();
@@ -66,14 +67,13 @@ const RecordExpense = () => {
           duration: 2000,
         });
         const responseData = (res as { data: any }).data;
-        
 
-        navigate(`/user/expenses-summary/${responseData.data.registeredTourId}`);
+        navigate(
+          `/user/expenses-summary/${responseData.data.registeredTourId}`
+        );
       }
-    } catch (error:any) {
- 
-     toast.error(`${error.message}`,{ id: toastId, duration: 2000 })
- 
+    } catch (error: any) {
+      toast.error(`${error.message}`, { id: toastId, duration: 2000 });
     }
   };
 
@@ -83,6 +83,7 @@ const RecordExpense = () => {
 
   return (
     <div>
+      <Heading title="Record Expense" />
       <Row justify="center" align="middle" className="mx-auto mt-8">
         <CustomForm onSubmit={onSubmit}>
           <FormInput

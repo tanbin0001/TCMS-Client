@@ -25,13 +25,11 @@
 //   const currentUser = useSelector(selectCurrentUser);
 //   const matchedUser = usersData?.data?.filter((FindingUser: any) => FindingUser._id === currentUser!._id );
 //   const selectedUserData = matchedUser && matchedUser.length > 0 ? matchedUser[0] : null;
- 
-  
- 
+
 //   // Filter tours based on the tourCreator property
 //   const myTours = data?.data?.filter((tour :any) => tour?.tourCreator === selectedUserData?.username);
 //   console.log(myTours);
- 
+
 //   if (isGetQueryError) {
 //     toast.error("Failed to get tours");
 //   }
@@ -50,7 +48,7 @@
 //       <Heading title="All Tours" />
 
 //       <div className="  mt-10  flex justify-center ">
-      
+
 //         <div className="">
 //           <input
 //             className=" lg:w-96  px-4 py-1    text-sm rounded-md border-2 border-purple-400 text-gray-600 outline-purple-600"
@@ -148,7 +146,9 @@ const AllTours = () => {
           </div>
         ) : (
           <p className="text-center mt-5 text-gray-600">
-         {filteredTours ? "Tour not found" : "You haven't created any tour yet."}
+            {filteredTours
+              ? "Tour not found"
+              : "You haven't created any tour yet."}
           </p>
         )}
       </div>
